@@ -43,7 +43,7 @@ async def main():
     payload = registry.pack(event)
 
     async with aiohttp.ClientSession() as session:
-        async with session.post("http://localhost:8080/_api/v1/transaction", json=payload) as response:
+        async with session.post("http://localhost:8181/_api/v1/transaction", json=payload) as response:
             data = await response.json()
 
     print(data)
