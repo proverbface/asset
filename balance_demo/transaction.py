@@ -6,7 +6,7 @@ from plug.registry import Registry
 from plug.transaction import Transaction
 from plug.util import plug_address
 from plug.util import sha256
-from transform import BalanceTransform
+from balance_demo.transform import BalanceTransform
 import aiohttp
 
 class User:
