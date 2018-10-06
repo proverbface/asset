@@ -7,6 +7,7 @@ from plug.transaction import Transaction
 from plug.util import plug_address
 from plug.util import sha256
 from transform import BalanceTransform
+import aiohttp
 
 class User:
     def __init__(self, signing_key, nonce=0):
@@ -16,6 +17,10 @@ class User:
 
 
 async def main():
+    registry = Registry().with_default()
+    registry.register(Event)
+    registry.register(BalanceTransfer)
+
     bob = User(ED25519SigningKey.new())
     alice = User(ED25519SigningKey.new())
 
@@ -37,10 +42,6 @@ async def main():
         payload=transaction
     )
 
-    registry = Registry().with_default()
-    registry.register(Event)
-    registry.register(BalanceTransfer)
-
     payload = registry.pack(event)
 
     async with aiohttp.ClientSession() as session:
@@ -48,6 +49,7 @@ async def main():
             data = await response.json()
 
     print(data)
+
 
 if __name__ == "__main__":
     loop = asyncio.get_event_loop()
